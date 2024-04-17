@@ -179,7 +179,7 @@ get_database_field_value() {
             return 1
         else
             eval FieldValue=\$${3} || return 1
-            echo "$FieldValue"
+            echo "$FieldValue" || return 1
         fi
     fi
 
