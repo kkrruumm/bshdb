@@ -106,6 +106,16 @@ Outputting a database entry field value (echoes):
 get_database_field_value /path/to/database/file nameofentry nameoffield
 ```
 
+A successful bshdb command should always return 0, any failure whatsoever should return 1.
+
+This means that you can execute your commands and verify their functionality at the same time via something like:
+
+```
+if create_database /path/to/database/file ; then
+    # Do stuff here
+fi
+```
+
 # Notes
 
 This database library *is* pretty slow when creating entries.
@@ -124,7 +134,7 @@ do
 done
 ```
 
-On my system (i7 10700k, 32gb 3200mhz cl16 RAM, Samsung 970 evo plus NVME), this benchmarked as follows with gnu coreutils:
+On my system (i7 10700k, 32gb 3200mhz cl16 RAM, Samsung 970 evo plus NVME + XFS), this benchmarked as follows with gnu coreutils:
 ```
 $ time ./controlscript 
 

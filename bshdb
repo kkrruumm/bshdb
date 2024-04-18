@@ -22,6 +22,8 @@ delete_database() {
 
     if [ -e "$1" ] ; then
         rm "$1" || return 1
+    else
+        return 1
     fi
 
     return 0
@@ -50,6 +52,8 @@ __EOF__
        else
             return 1 
        fi
+    else
+        return 1
     fi
 
     return 0
@@ -75,7 +79,11 @@ delete_database_entry() {
                 output=$(sed 's/[ \t]'$2'//g' "$1") || return 1
                 echo "$output" > "$1" || return 1
             fi
+        else
+            return 1
         fi
+    else
+        return 1
     fi
     
     return 0
@@ -88,6 +96,8 @@ create_database_entry_field() {
         if echo "$entries" | grep "$2" > /dev/null 2>&1 ; then
             output=$(sed "/$2() {/a \ \ \ \ $3='$4'" "$1") || return 1
             echo "$output" > "$1" || return 1
+        else
+            return 1
         fi
 
         "$2" || return 1
@@ -100,7 +110,8 @@ create_database_entry_field() {
             output=$(sed "$lineNumber,/fields='$fields'/ s/fields='$fields'/fields='$fields $3'/" "$1") || return 1
             echo "$output" > "$1" || return 1
         fi
-
+    else
+        return 1
     fi
 
     return 0
@@ -134,8 +145,14 @@ delete_database_entry_field() {
             elif echo "$sedFunc" | grep " $3" > /dev/null 2>&1 ; then
                 output=$(sed "$lineNumber,/[ \t]$3/ s/[ \t]$3//" "$1") || return 1
                 echo "$output" > "$1" || return 1
-            fi 
+            else
+                return 1
+            fi
+        else
+            return 1
         fi
+    else
+        return 1
     fi
 
     return 0
@@ -150,6 +167,8 @@ get_database_entries() {
         else
             echo "$entries" || return 1
         fi
+    else
+        return 1
     fi
 
     return 0
@@ -165,6 +184,8 @@ get_database_entry_fields() {
         else
             echo "$fields" || return 1
         fi
+    else
+        return 1
     fi
 
     return 0
@@ -181,6 +202,8 @@ get_database_field_value() {
             eval FieldValue=\$${3} || return 1
             echo "$FieldValue" || return 1
         fi
+    else
+        return 1
     fi
 
     return 0
@@ -194,7 +217,11 @@ set_database_field_value() {
             lineNumber=$(grep -n "$2()" "$1" | cut -d: -f1) || return 1
             output=$(sed "$lineNumber,/$3=.*/ s/$3=.*/$3='$4'/" "$1") || return 1
             echo "$output" > "$1" || return 1 
+        else
+            return 1
         fi
+    else
+        return 1
     fi
 
     return 0
