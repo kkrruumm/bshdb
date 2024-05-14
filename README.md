@@ -134,7 +134,7 @@ do
 done
 ```
 
-On my system (i7 10700k, 32gb 3200mhz cl16 RAM, Samsung 970 evo plus NVME + XFS), this benchmarked as follows with gnu coreutils:
+On my system (i7 10700k, 32gb 3200mhz cl16 RAM, Samsung 970 evo plus NVME + XFS), this benchmarked as follows with gnu coreutils and /bin/sh linked to dash:
 ```
 $ time ./controlscript 
 
